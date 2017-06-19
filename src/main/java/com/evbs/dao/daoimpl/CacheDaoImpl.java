@@ -1,15 +1,16 @@
-package com.evbs.service;
+package com.evbs.dao.daoimpl;
 
+import com.evbs.dao.CacheDao;
 import com.evbs.dao.UserDao;
 import com.evbs.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
- * Created by squirrel-chen on 6/18/17.
+ * Created by squirrel-chen on 6/19/17.
  */
-@Service
-public class UserServiceImpl  implements  UserService{
+@Component
+public class CacheDaoImpl implements CacheDao {
 
 
     @Autowired
@@ -21,8 +22,8 @@ public class UserServiceImpl  implements  UserService{
     }
 
     @Override
-    public User getUser(int id) {
-        return userDao.getUser(id);
+    public User getUser(int userid) {
+        return userDao.getUser(userid);
     }
 
     @Override
@@ -30,4 +31,3 @@ public class UserServiceImpl  implements  UserService{
         userDao.testRedis();
     }
 }
-

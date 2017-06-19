@@ -1,5 +1,6 @@
-package com.evbs.dao;
+package com.evbs.dao.daoimpl;
 
+import com.evbs.dao.UserDao;
 import com.evbs.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

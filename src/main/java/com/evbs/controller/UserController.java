@@ -16,7 +16,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/com/evbs/test")
+    @RequestMapping("/test")
     public String testuser()
     {
 
@@ -31,7 +31,6 @@ public class UserController {
     @RequestMapping("/demo")
     public String testredis()
     {
-
         userService.testRedis();
         return "WELL";
     }
