@@ -1,4 +1,4 @@
-package com.evbs.test;
+package controllertest;
 
 import com.evbs.controller.UserController;
 import com.evbs.MainApplication;

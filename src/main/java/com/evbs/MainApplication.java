@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Created by squirrel-chen on 6/18/17.
  */
 
-
 @SpringBootApplication
 public class MainApplication {
     public static void main(String[] args) {

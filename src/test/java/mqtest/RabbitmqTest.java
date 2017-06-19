@@ -1,5 +1,4 @@
-package com.evbs.test;
-
+package mqtest;
 
 import com.evbs.MainApplication;
 import com.evbs.mq.Sender;

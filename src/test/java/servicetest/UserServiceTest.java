@@ -1,4 +1,4 @@
-package com.evbs.test;
+package servicetest;
 
 import com.evbs.dao.UserDao;
 import com.evbs.MainApplication;

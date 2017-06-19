@@ -1,4 +1,4 @@
-package com.evbs.test;
+package daotest;
 
 import com.evbs.MainApplication;
 import com.evbs.pojo.User;
