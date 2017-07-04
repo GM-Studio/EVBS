@@ -1,5 +1,6 @@
 package com.evbs.dao.daoimpl;
 
+import com.evbs.dao.BaseIODao;
 import com.evbs.dao.UserDao;
 import com.evbs.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class UserDaoImpl implements UserDao {
 
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
+    @Autowired
+    private BaseIODao baseIODao;
 
     @Override
     public void setUser(User user) {
@@ -98,5 +101,18 @@ public class UserDaoImpl implements UserDao {
         }
         redisTemplate.delete("myhash");
         //-----------------------hash 测试结束------------------------------------//
+    }
+
+    @Override
+    public int login(User user) {
+        return 0;
+    }
+
+    @Override
+    public int register(User user) {
+        String passwdpath="/home/squirrel-chen/evbs/passfile.txt";
+        String userinfo="UserId:"+"     "+user.getUserid()+"UserName:"+"     "+user.getUsername()+"PassWord:"+"     "+user.getPassword();
+        baseIODao.fileWrite(passwdpath,userinfo);
+        return 1;
     }
 }

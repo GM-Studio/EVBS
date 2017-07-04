@@ -10,5 +10,6 @@ public interface UserService {
     public void setUser(User user);
     public User getUser(int userid);
     public void testRedis();
-
+    public int login(User user);
+    public int register(User user);
 }

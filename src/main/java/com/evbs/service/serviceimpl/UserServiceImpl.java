@@ -14,8 +14,11 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl  implements UserService {
 
 
+
     @Autowired
     private CacheDao cacheDao;
+    @Autowired
+    private UserDao userDao;
 
     @Override
     public void setUser(User user) {
@@ -30,6 +33,16 @@ public class UserServiceImpl  implements UserService {
     @Override
     public void testRedis() {
         cacheDao.testRedis();
+    }
+
+    @Override
+    public int login(User user) {
+        return userDao.login(user);
+    }
+
+    @Override
+    public int register(User user) {
+        return userDao.register(user);
     }
 }
 

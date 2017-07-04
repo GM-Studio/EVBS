@@ -41,12 +41,18 @@ public class BaseIODaoImpl implements BaseIODao {
 
         try{
             File outputfile=new File(filename);
-           // OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(outputfile));
-            BufferedWriter writer=new BufferedWriter(new FileWriter(outputfile));
-            writer.write(data);
-           // writer.write(data.toCharArray(),0,data.length());
-            writer.flush();
-            writer.close();
+            if(outputfile.exists()==false)
+            {
+                outputfile.createNewFile();
+            }
+            else {
+                // OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(outputfile));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(outputfile,true));
+                writer.write(data+"\n");
+                // writer.write(data.toCharArray(),0,data.length());
+                writer.flush();
+                writer.close();
+            }
         }
 
         catch(Exception e)
