@@ -36,12 +36,12 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    public int login(User user) {
+    public boolean login(User user) {
         return userDao.login(user);
     }
 
     @Override
-    public int register(User user) {
+    public boolean register(User user) {
         return userDao.register(user);
     }
 }

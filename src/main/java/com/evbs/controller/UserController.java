@@ -39,17 +39,24 @@ public class UserController {
     }
 
     @RequestMapping(value="/login",method = RequestMethod.GET)
-    public String login(@RequestParam("username")String username,@RequestParam("password")String password)
+    public String login(User user)
     {
-        System.out.println("登录的用户名和密码"+username+"...."+password);
-        return "success";
+        System.out.println("登录的用户名和密码"+user.getUsername()+"...."+user.getPassword());
+        if(userService.login(user))
+        {
+            return "success";
+        }
+        return  "failure";
     }
 
     @RequestMapping(value="/register",method=RequestMethod.GET)
     public String register(User user)
     {
         System.out.println("登录的用户名和密码"+user.getUsername()+"...."+user.getPassword());
-        userService.register(user);
-        return "success";
+        if(userService.register(user))
+        {
+          return "success";
+        }
+        return "failure";
     }
 }

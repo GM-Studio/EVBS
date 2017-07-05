@@ -6,6 +6,6 @@ package com.evbs.dao;
 public interface BaseIODao {
 
    public String fileRead(String filename);
-   public void fileWrite(String filename,String data);
+   public boolean fileWrite(String filename,String data);
 
 }

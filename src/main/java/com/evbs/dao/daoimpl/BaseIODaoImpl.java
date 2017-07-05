@@ -1,5 +1,6 @@
 package com.evbs.dao.daoimpl;
 import com.evbs.dao.BaseIODao;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
@@ -13,14 +14,17 @@ public class BaseIODaoImpl implements BaseIODao {
 
     @Override
     public String fileRead (String filename){
-       // char buff[]=new char[1024];
+
         String str=new String();
         StringBuilder sb=new StringBuilder();
         try {
             File inputfile = new File(filename);
-           // InputStreamReader reader = new InputStreamReader(new FileInputStream(inputfile));
+            if (!inputfile.exists())
+            {
+                System.out.println("文件不存在");
+                return "";
+            }
             BufferedReader reader=new BufferedReader(new FileReader(inputfile));
-            //reader.read(buff,0,(int)inputfile.length());
             while((str=reader.readLine())!=null)
             {
                 sb.append(str+"\n");
@@ -37,22 +41,20 @@ public class BaseIODaoImpl implements BaseIODao {
     }
 
     @Override
-    public void fileWrite(String filename,String data) {
+    public boolean fileWrite(String filename,String data) {
 
         try{
+
             File outputfile=new File(filename);
-            if(outputfile.exists()==false)
+            if(!outputfile.exists())
             {
                 outputfile.createNewFile();
             }
-            else {
-                // OutputStreamWriter writer=new OutputStreamWriter(new FileOutputStream(outputfile));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(outputfile,true));
-                writer.write(data+"\n");
-                // writer.write(data.toCharArray(),0,data.length());
-                writer.flush();
-                writer.close();
-            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outputfile,true));
+            writer.write(data+"\n");
+            writer.flush();
+            writer.close();
+            return true;
         }
 
         catch(Exception e)
@@ -61,5 +63,6 @@ public class BaseIODaoImpl implements BaseIODao {
             e.printStackTrace();
         }
 
+        return false;
     }
 }

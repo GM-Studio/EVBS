@@ -10,7 +10,7 @@ public interface UserDao {
     public void setUser(User user);
     public User getUser(int userid);
     public void testRedis();
-    public int login(User user);
-    public int register(User user);
+    public boolean login(User user);
+    public boolean register(User user);
 
 }

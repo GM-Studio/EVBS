@@ -104,15 +104,23 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int login(User user) {
-        return 0;
+    public boolean login(User user) {
+        String passwdpath="/home/squirrel-chen/evbs/passfile.json";
+        String data=baseIODao.fileRead(passwdpath);
+        if(data.equals(""))
+        {
+            System.out.println("无数据文件读取");
+            return false;
+        }
+        System.out.println("读取的数据"+data);
+        return true;
     }
 
     @Override
-    public int register(User user) {
-        String passwdpath="/home/squirrel-chen/evbs/passfile.txt";
+    public boolean register(User user) {
+        String passwdpath="/home/squirrel-chen/evbs/passfile.json";
         String userinfo="UserId:"+"     "+user.getUserid()+"UserName:"+"     "+user.getUsername()+"PassWord:"+"     "+user.getPassword();
-        baseIODao.fileWrite(passwdpath,userinfo);
-        return 1;
+        boolean flag= baseIODao.fileWrite(passwdpath,userinfo);
+        return flag;
     }
 }
