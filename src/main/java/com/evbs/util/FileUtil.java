@@ -67,4 +67,23 @@ public class FileUtil {
         }
     }
 
+    public static boolean createUserDir(String dirpath)
+    {
+        File userdir=new File(dirpath);
+        try{
+            if(!userdir.exists())
+            {
+                userdir.mkdirs();
+                LogUtil.logger.info("创建用户目录");
+            }
+            return true;
+        }
+        catch(Exception e)
+        {
+            LogUtil.logger.info("目录创建失败");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

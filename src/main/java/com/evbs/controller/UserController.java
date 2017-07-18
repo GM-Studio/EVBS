@@ -4,7 +4,10 @@ import com.evbs.pojo.Passwd;
 import com.evbs.pojo.Shadow;
 import com.evbs.pojo.User;
 import com.evbs.service.UserService;
+import com.evbs.util.FileUtil;
 import com.evbs.util.LogUtil;
+import com.evbs.util.SHAUtil;
+import org.apache.commons.io.FileUtils;
 import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,39 +67,35 @@ public class UserController {
     public String register(@RequestParam("username")String username,@RequestParam("password")String password)
     {
         LogUtil.logger.info("登录的用户名和密码"+username+"...."+password);
+        LogUtil.logger.info("用户目录创建"+ FileUtil.createUserDir("/home/squirrel-chen/evbs/"+username));
 
-//        /**
-//         *  创建Passwd对象
-//         */
-//
-//        Passwd passwd=new Passwd();
-//        passwd.setUsername(username);
-//        passwd.setUid(1);
-//        passwd.setGid(1);
-//        passwd.setPasswd("x");
-//        passwd.setComment("使用者"+username);
-//        passwd.setUsershell("");
-//        passwd.setUserpath("");
-//
-//        /**
-//         *  创建 Shadow 对象
-//         */
-//
-//        Shadow shadow=new Shadow();
-//        shadow.setUsername(username);
-//        shadow.setPassword("");
-//        shadow.setFlag("true");
-//        shadow.setMin(new Date());
-//        shadow.setMax(new Date());
-//        shadow.setExpire(new Date());
-//        shadow.setWarn(new Date());
-//        shadow.setInactive(new Date());
-//        shadow.setLastchg(new Date());
+        /**
+         *  创建Passwd对象
+         */
 
-        String passwd=username+":"+"x:"+"1:"+"1:"+"使用者"+username+":"+"路径"+""+":"+"bash";
-        String shadow=username+":"+"hashid:"+"17329:"+"0:"+"99999:"+"7:::";
+        Passwd passwd=new Passwd();
+        passwd.setUsername(username);
+        passwd.setUid(1);
+        passwd.setGid(1);
+        passwd.setPasswd("x");
+        passwd.setComment("使用者"+username);
+        passwd.setUserpath("/home/squirrel-chen/evbs/"+username);
 
-        if(userService.register(passwd,shadow))
+        /**
+         *  创建 Shadow 对象
+         */
+
+        Shadow shadow=new Shadow();
+        shadow.setUsername(username);
+        shadow.setPassword("");
+        shadow.setFlag("true");
+
+        String pawd=username+":x:1:1:"+passwd.getComment()+":"+passwd.getUserpath()+"\n";
+        String shacode = SHAUtil.shaEncode(password);
+        LogUtil.logger.info("加密后的密码"+shacode);
+        String shaw=username+":"+shacode+"\n";
+
+        if(userService.register(pawd,shaw))
         {
           return "success";
         }
