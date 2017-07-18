@@ -69,14 +69,17 @@ public class UserController {
         LogUtil.logger.info("登录的用户名和密码"+username+"...."+password);
         LogUtil.logger.info("用户目录创建"+ FileUtil.createUserDir("/home/squirrel-chen/evbs/"+username));
 
+        int linesnum=FileUtil.countLines("/home/squirrel-chen/evbs/etc/passwd");
+
+
         /**
          *  创建Passwd对象
          */
 
         Passwd passwd=new Passwd();
         passwd.setUsername(username);
-        passwd.setUid(1);
-        passwd.setGid(1);
+        passwd.setUid(linesnum+1);
+        passwd.setGid(linesnum+1);
         passwd.setPasswd("x");
         passwd.setComment("使用者"+username);
         passwd.setUserpath("/home/squirrel-chen/evbs/"+username);
@@ -90,7 +93,7 @@ public class UserController {
         shadow.setPassword("");
         shadow.setFlag("true");
 
-        String pawd=username+":x:1:1:"+passwd.getComment()+":"+passwd.getUserpath()+"\n";
+        String pawd=username+":x:"+passwd.getUid()+":"+passwd.getGid()+":"+passwd.getComment()+":"+passwd.getUserpath()+"\n";
         String shacode = SHAUtil.shaEncode(password);
         LogUtil.logger.info("加密后的密码"+shacode);
         String shaw=username+":"+shacode+"\n";

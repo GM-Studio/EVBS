@@ -86,4 +86,24 @@ public class FileUtil {
         }
     }
 
+    public static int countLines(String filepath)
+    {
+        File countfile=new File(filepath);
+        try{
+
+            if(!countfile.exists())
+            {
+            LogUtil.logger.info("目标文件不存在");
+            return 0;
+            }
+           return (FileUtils.readLines(countfile,"UTF-8")).size();
+        }
+        catch(Exception e)
+        {
+            LogUtil.logger.error("统计文件行数异常");
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }
