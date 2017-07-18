@@ -41,8 +41,8 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    public boolean register(User user) {
-        return userDao.register(user);
+    public boolean register(String passwd,String shadow) {
+        return userDao.register(passwd, shadow);
     }
 }
 

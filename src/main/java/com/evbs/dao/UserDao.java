@@ -11,6 +11,6 @@ public interface UserDao {
     public User getUser(int userid);
     public void testRedis();
     public boolean login(User user);
-    public boolean register(User user);
+    public boolean register(String passwd,String shadow);
 
 }
