@@ -1,8 +1,8 @@
 package com.evbs.dao.daoimpl;
 
-import com.evbs.dao.BaseIODao;
 import com.evbs.dao.UserDao;
 import com.evbs.pojo.User;
+import com.evbs.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,8 +18,6 @@ public class UserDaoImpl implements UserDao {
 
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
-    @Autowired
-    private BaseIODao baseIODao;
 
     @Override
     public void setUser(User user) {
@@ -106,7 +104,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean login(User user) {
         String passwdpath="/home/squirrel-chen/evbs/passfile.json";
-        String data=baseIODao.fileRead(passwdpath);
+        String data= FileUtil.readFromFile(passwdpath);
         if(data.equals(""))
         {
             System.out.println("无数据文件读取");
@@ -120,7 +118,9 @@ public class UserDaoImpl implements UserDao {
     public boolean register(User user) {
         String passwdpath="/home/squirrel-chen/evbs/passfile.json";
         String userinfo="UserId:"+"     "+user.getUserid()+"UserName:"+"     "+user.getUsername()+"PassWord:"+"     "+user.getPassword();
-        boolean flag= baseIODao.fileWrite(passwdpath,userinfo);
-        return flag;
+        if(FileUtil.writeToFile(passwdpath,userinfo)==1){
+        return true;
+        }
+        return false;
     }
 }

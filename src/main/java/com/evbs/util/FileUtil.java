@@ -45,9 +45,5 @@ public class FileUtil {
         }
     }
 
-    public static void main(String[] args)
-    {
-        FileUtil.writeToFile("/home/squirrel-chen/hello.txt","hello world 你是猪吗？？？ 123456");
-        System.out.println(FileUtil.readFromFile("/home/squirrel-chen/hello.txt"));
-    }
+
 }
