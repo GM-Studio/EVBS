@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Created by squirrel-chen on 7/12/17.
@@ -16,12 +17,13 @@ public class FileUtil {
         try {
             if(!outputfile.exists())
             {
-                System.out.println("文件不存在");
+                LogUtil.logger.info("目标文件不存在");
                 outputfile.createNewFile();
             }
             FileUtils.writeStringToFile(outputfile,data,"UTF-8");
             return true;
         } catch (IOException e) {
+            LogUtil.logger.info("写入文件数据出错");
             e.printStackTrace();
             return false;
         }
@@ -33,13 +35,14 @@ public class FileUtil {
         try{
             if(!inputfile.exists())
             {
-                System.out.println("文件不存在");
+                LogUtil.logger.info("目标文件不存在");
                 return "";
             }
            return FileUtils.readFileToString(inputfile,"UTF-8");
         }
         catch(IOException e)
         {
+            LogUtil.logger.info("读取文件数据出错");
             e.printStackTrace();
             return "";
         }
@@ -51,13 +54,14 @@ public class FileUtil {
         try{
             if(!appendfile.exists()){
                 appendfile.createNewFile();
+                LogUtil.logger.info("文件不存在,创建新文件");
             }
             FileUtils.writeStringToFile(appendfile,data,"UTF-8",true);
             return true;
         }
         catch(Exception e)
         {
-            System.out.println("文件不存在");
+            LogUtil.logger.info("追加文件数据出错");
             e.printStackTrace();
             return false;
         }

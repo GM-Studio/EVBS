@@ -3,6 +3,7 @@ package com.evbs.dao.daoimpl;
 import com.evbs.dao.UserDao;
 import com.evbs.pojo.User;
 import com.evbs.util.FileUtil;
+import com.evbs.util.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -107,10 +108,10 @@ public class UserDaoImpl implements UserDao {
         String data= FileUtil.readFromFile(passwdpath);
         if(data.equals(""))
         {
-            System.out.println("无数据文件读取");
+            LogUtil.logger.info("暂无数据读取");
             return false;
         }
-        System.out.println("读取的数据"+data);
+        LogUtil.logger.info("\n"+data);
         return true;
     }
 
