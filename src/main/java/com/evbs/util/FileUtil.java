@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public class FileUtil {
 
-    public static int writeToFile(String filepath,String data)
+    public static boolean writeToFile(String filepath,String data)
     {
         File outputfile=new File(filepath);
         try {
@@ -19,11 +19,11 @@ public class FileUtil {
                 System.out.println("文件不存在");
                 outputfile.createNewFile();
             }
-            FileUtils.writeStringToFile(outputfile,data);
-            return 1;
+            FileUtils.writeStringToFile(outputfile,data,"UTF-8");
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            return 0;
+            return false;
         }
     }
 
@@ -45,5 +45,22 @@ public class FileUtil {
         }
     }
 
+    public static boolean appendDataToFile(String filepath,String data)
+    {
+        File appendfile=new File(filepath);
+        try{
+            if(!appendfile.exists()){
+                appendfile.createNewFile();
+            }
+            FileUtils.writeStringToFile(appendfile,data,"UTF-8",true);
+            return true;
+        }
+        catch(Exception e)
+        {
+            System.out.println("文件不存在");
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

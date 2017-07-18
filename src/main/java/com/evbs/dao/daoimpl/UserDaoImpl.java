@@ -117,10 +117,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean register(User user) {
         String passwdpath="/home/squirrel-chen/evbs/passfile.json";
-        String userinfo="UserId:"+"     "+user.getUserid()+"UserName:"+"     "+user.getUsername()+"PassWord:"+"     "+user.getPassword();
-        if(FileUtil.writeToFile(passwdpath,userinfo)==1){
-        return true;
-        }
-        return false;
+        String userinfo="UserId:"+"     "+user.getUserid()+"UserName:"+"     "+user.getUsername()+"PassWord:"+"     "+user.getPassword()+"\n";
+        return FileUtil.appendDataToFile(passwdpath,userinfo);
     }
 }
