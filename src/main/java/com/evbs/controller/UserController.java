@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by squirrel-chen on 6/18/17.
@@ -66,10 +69,36 @@ public class UserController {
     @RequestMapping(value="/register",method=RequestMethod.POST)
     public String register(@RequestParam("username")String username,@RequestParam("password")String password)
     {
-        LogUtil.logger.info("登录的用户名和密码"+username+"...."+password);
-        LogUtil.logger.info("用户目录创建"+ FileUtil.createUserDir("/home/squirrel-chen/evbs/"+username));
 
-        int linesnum=FileUtil.countLines("/home/squirrel-chen/evbs/etc/passwd");
+
+        String ROOT_PATH="/home/squirrel-chen/evbs/";
+        String USER_PATH=ROOT_PATH+username;
+        String PROFILE_PATH=USER_PATH+"/.profile";
+
+        String PASSWD_PATH=ROOT_PATH+"etc/passwd";
+     // String SHADOW_PATH=ROOT_PATH+"etc/shadow";
+
+        int USER_ID=0;
+        LogUtil.logger.info("创建用户目录"+ FileUtil.createUserDir(USER_PATH));
+
+        int linesnum=FileUtil.countLines(PASSWD_PATH);
+        LogUtil.logger.info("用户总数量"+linesnum);
+        FileUtil.writeToFile(PROFILE_PATH,username+":"+Integer.valueOf(linesnum+1)+"\n");
+
+        try {
+        List<String> result = FileUtils.readLines(new File(PROFILE_PATH), "UTF-8");
+        USER_ID=Integer.valueOf(result.get(0).substring(result.get(0).lastIndexOf(":")+1,result.get(0).length()));
+        }
+        catch(Exception e)
+        {
+            LogUtil.logger.error("截取错误");
+            USER_ID=0;
+            e.printStackTrace();
+        }
+
+//        String d=FileUtil.readFromFile(PROFILE_PATH);
+//        d=d.substring(d.lastIndexOf(":")+1,d.length());
+        LogUtil.logger.info("用户记录"+Integer.valueOf(USER_ID));
 
 
         /**
@@ -82,7 +111,7 @@ public class UserController {
         passwd.setGid(linesnum+1);
         passwd.setPasswd("x");
         passwd.setComment("使用者"+username);
-        passwd.setUserpath("/home/squirrel-chen/evbs/"+username);
+        passwd.setUserpath(ROOT_PATH+username);
 
         /**
          *  创建 Shadow 对象

@@ -19,6 +19,7 @@ public class FileUtil {
             {
                 LogUtil.logger.info("目标文件不存在");
                 outputfile.createNewFile();
+                LogUtil.logger.info("创建新文件"+outputfile.getName());
             }
             FileUtils.writeStringToFile(outputfile,data,"UTF-8");
             return true;
