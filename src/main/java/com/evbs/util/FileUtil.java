@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -105,6 +106,21 @@ public class FileUtil {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public static String readDataByLineNumber(String filepath,int linenum)
+    {
+        File resouce=new File(filepath);
+        String str="";
+        try {
+            List<String> result=FileUtils.readLines(resouce,"UTF-8");
+            str=result.get(linenum-1);
+            LogUtil.logger.info("读取的行数是"+linenum+"读取的对应数据是"+str);
+        } catch (IOException e) {
+            LogUtil.logger.error("读取数据错误");
+            e.printStackTrace();
+        }
+        return str;
     }
 
 }

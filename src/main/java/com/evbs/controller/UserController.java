@@ -55,15 +55,39 @@ public class UserController {
     @RequestMapping(value="/login",method = RequestMethod.POST)
     public String login(@RequestParam("username")String username,@RequestParam("password")String password)
     {
+        String ROOT_PATH="/home/squirrel-chen/evbs/";
+        String USER_PATH=ROOT_PATH+username;
+        String PROFILE_PATH=USER_PATH+"/.profile";
+
+//        String PASSWD_PATH=ROOT_PATH+"etc/passwd";
+        String SHADOW_PATH=ROOT_PATH+"etc/shadow";
         LogUtil.logger.info("登录的用户名和密码"+username+"...."+password);
 
+        int USER_ID=0;
+        try {
+        List<String> result = FileUtils.readLines(new File(PROFILE_PATH), "UTF-8");
+        USER_ID=Integer.valueOf(result.get(0).substring(result.get(0).lastIndexOf(":")+1,result.get(0).length()));
+        }
+        catch(Exception e)
+        {
+            LogUtil.logger.error("截取错误");
+            USER_ID=0;
+            e.printStackTrace();
+        }
 
-//
-//        if(userService.login(user))
-//        {
-//            return "success";
-//        }
-        return  "failure";
+        String readdata= FileUtil.readDataByLineNumber(SHADOW_PATH,USER_ID);
+        readdata=readdata.substring(readdata.lastIndexOf(":")+1,readdata.length());
+        String encodepw=SHAUtil.shaEncode(password);
+        if(encodepw.equals(readdata))
+        {
+            LogUtil.logger.info("密码验证正确");
+            return "success";
+        }
+        else
+        {
+            LogUtil.logger.error("密码验证错误");
+            return "failure";
+        }
     }
 
     @RequestMapping(value="/register",method=RequestMethod.POST)
@@ -76,29 +100,20 @@ public class UserController {
         String PROFILE_PATH=USER_PATH+"/.profile";
 
         String PASSWD_PATH=ROOT_PATH+"etc/passwd";
-     // String SHADOW_PATH=ROOT_PATH+"etc/shadow";
+        String SHADOW_PATH=ROOT_PATH+"etc/shadow";
 
-        int USER_ID=0;
+
         LogUtil.logger.info("创建用户目录"+ FileUtil.createUserDir(USER_PATH));
 
         int linesnum=FileUtil.countLines(PASSWD_PATH);
         LogUtil.logger.info("用户总数量"+linesnum);
         FileUtil.writeToFile(PROFILE_PATH,username+":"+Integer.valueOf(linesnum+1)+"\n");
 
-        try {
-        List<String> result = FileUtils.readLines(new File(PROFILE_PATH), "UTF-8");
-        USER_ID=Integer.valueOf(result.get(0).substring(result.get(0).lastIndexOf(":")+1,result.get(0).length()));
-        }
-        catch(Exception e)
-        {
-            LogUtil.logger.error("截取错误");
-            USER_ID=0;
-            e.printStackTrace();
-        }
+
 
 //        String d=FileUtil.readFromFile(PROFILE_PATH);
 //        d=d.substring(d.lastIndexOf(":")+1,d.length());
-        LogUtil.logger.info("用户记录"+Integer.valueOf(USER_ID));
+//        LogUtil.logger.info("用户记录"+Integer.valueOf(USER_ID));
 
 
         /**
@@ -126,6 +141,9 @@ public class UserController {
         String shacode = SHAUtil.shaEncode(password);
         LogUtil.logger.info("加密后的密码"+shacode);
         String shaw=username+":"+shacode+"\n";
+
+
+
 
         if(userService.register(pawd,shaw))
         {
