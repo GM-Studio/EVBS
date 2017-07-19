@@ -17,15 +17,8 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping("/errorpage")
-    public String errorpage()
-    {
-        return "error";
+    @RequestMapping("/page")
+    public String page(){
+        return "page";
     }
-    @RequestMapping("/hello")
-    public String hello()
-    {
-        return "hello";
-    }
-
 }
