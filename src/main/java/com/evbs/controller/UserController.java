@@ -33,35 +33,43 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    @RequestMapping("/test")
-//    public String testuser()
-//    {
-//
-//        User user=new User(2,"zh","123456");
-//        System.out.println("设置对象存储redis");
-//        userService.setUser(user);
-//        System.out.println("获取redis存储的对象");
-//        userService.getUser(2);
-//        return "ok";
-//    }
-//
-//    @RequestMapping("/demo")
-//    public String testredis()
-//    {
-//        userService.testRedis();
-//        return "WELL";
-//    }
+    private  String ROOT_PATH="/home/squirrel-chen/evbs/";
+    private  String PASSWD_PATH=ROOT_PATH+"etc/passwd";
+    private  String SHADOW_PATH=ROOT_PATH+"etc/shadow";
 
+    @RequestMapping("/test")
+    public String testuser()
+    {
+
+        User user=new User(2,"zh","123456");
+        System.out.println("设置对象存储redis");
+        userService.setUser(user);
+        System.out.println("获取redis存储的对象");
+        userService.getUser(2);
+        return "ok";
+    }
+
+    @RequestMapping("/demo")
+    public String testredis()
+    {
+        userService.testRedis();
+        return "WELL";
+    }
+
+    /**
+     * function for login
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping(value="/login",method = RequestMethod.POST)
     public String login(@RequestParam("username")String username,@RequestParam("password")String password)
     {
-        String ROOT_PATH="/home/squirrel-chen/evbs/";
         String USER_PATH=ROOT_PATH+username;
         String PROFILE_PATH=USER_PATH+"/.profile";
-
-//        String PASSWD_PATH=ROOT_PATH+"etc/passwd";
-        String SHADOW_PATH=ROOT_PATH+"etc/shadow";
         LogUtil.logger.info("登录的用户名和密码"+username+"...."+password);
+
+        //从文件中截取得到对应用户所在的行数
 
         int USER_ID=0;
         try {
@@ -77,6 +85,7 @@ public class UserController {
 
         String readdata= FileUtil.readDataByLineNumber(SHADOW_PATH,USER_ID);
         readdata=readdata.substring(readdata.lastIndexOf(":")+1,readdata.length());
+        // 将登录的密码和加密的密码进行比对
         String encodepw=SHAUtil.shaEncode(password);
         if(encodepw.equals(readdata))
         {
@@ -90,31 +99,29 @@ public class UserController {
         }
     }
 
+    /**
+     * function for register
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping(value="/register",method=RequestMethod.POST)
     public String register(@RequestParam("username")String username,@RequestParam("password")String password)
     {
 
-
-        String ROOT_PATH="/home/squirrel-chen/evbs/";
         String USER_PATH=ROOT_PATH+username;
         String PROFILE_PATH=USER_PATH+"/.profile";
-
-        String PASSWD_PATH=ROOT_PATH+"etc/passwd";
-        String SHADOW_PATH=ROOT_PATH+"etc/shadow";
-
-
         LogUtil.logger.info("创建用户目录"+ FileUtil.createUserDir(USER_PATH));
+
+        //统计已存在用户的数目
 
         int linesnum=FileUtil.countLines(PASSWD_PATH);
         LogUtil.logger.info("用户总数量"+linesnum);
         FileUtil.writeToFile(PROFILE_PATH,username+":"+Integer.valueOf(linesnum+1)+"\n");
 
-
-
-//        String d=FileUtil.readFromFile(PROFILE_PATH);
-//        d=d.substring(d.lastIndexOf(":")+1,d.length());
-//        LogUtil.logger.info("用户记录"+Integer.valueOf(USER_ID));
-
+        /**
+         * 此处不知道应该写入对象还是拼接字符串写入文件？？？
+         */
 
         /**
          *  创建Passwd对象
@@ -139,11 +146,7 @@ public class UserController {
 
         String pawd=username+":x:"+passwd.getUid()+":"+passwd.getGid()+":"+passwd.getComment()+":"+passwd.getUserpath()+"\n";
         String shacode = SHAUtil.shaEncode(password);
-        LogUtil.logger.info("加密后的密码"+shacode);
         String shaw=username+":"+shacode+"\n";
-
-
-
 
         if(userService.register(pawd,shaw))
         {
@@ -151,6 +154,11 @@ public class UserController {
         }
         return "failure";
     }
+
+    /**
+     *  user page
+     * @return
+     */
 
     @RequestMapping(value="/user")
     public String userpage()
