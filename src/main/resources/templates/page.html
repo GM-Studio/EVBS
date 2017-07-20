@@ -11,17 +11,17 @@
 
 <form style="text-align: center">
 
-    <input type="radio" name="no" value="1" />第一个 <br/>
-    <input type="radio" name="no" value="2" />第二个 <br/>
-    <input type="radio" name="no" value="3" />第三个 <br/>
+    <input type="radio" name="id" value="1" />第一个 <br/>
+    <input type="radio" name="id" value="2" />第二个 <br/>
+    <input type="radio" name="id" value="3" />第三个 <br/>
 
-    <input type="radio" name="no" value="4" />第四个 <br/>
-    <input type="radio" name="no" value="5" />第五个 <br/>
-    <input type="radio" name="no" value="6" />第六个 <br/>
+    <input type="radio" name="id" value="4" />第四个 <br/>
+    <input type="radio" name="id" value="5" />第五个 <br/>
+    <input type="radio" name="id" value="6" />第六个 <br/>
 
-    <input type="radio" name="no" value="7" />第七个 <br/>
-    <input type="radio" name="no" value="8" />第八个 <br/>
-    <input type="radio" name="no" value="9" />第九个 <br/>
+    <input type="radio" name="id" value="7" />第七个 <br/>
+    <input type="radio" name="id" value="8" />第八个 <br/>
+    <input type="radio" name="id" value="9" />第九个 <br/>
 
     <input type="button" id="submit" value="选择" />
     <input type="reset" value="重置" />
@@ -32,7 +32,7 @@
     $(document).ready(function () {
         $("#submit").click(function () {
 
-            var no=$("input[name='no']:checked").val();
+            var no=$("input[name='id']:checked").val();
             var hashids=new Hashids("my salt is pig ",15);
             var encode=hashids.encode(no);
             console.log(encode);
