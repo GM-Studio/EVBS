@@ -73,4 +73,10 @@ public class Passwd {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    @Override
+    public String toString()
+    {
+        return username+":"+passwd+":"+uid+":"+gid+":"+comment+":"+userpath+":"+usershell+"\n";
+    }
 }

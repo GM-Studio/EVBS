@@ -120,10 +120,6 @@ public class UserController {
         FileUtil.writeToFile(PROFILE_PATH,username+":"+Integer.valueOf(linesnum+1)+"\n");
 
         /**
-         * 此处不知道应该写入对象还是拼接字符串写入文件？？？
-         */
-
-        /**
          *  创建Passwd对象
          */
 
@@ -141,14 +137,10 @@ public class UserController {
 
         Shadow shadow=new Shadow();
         shadow.setUsername(username);
-        shadow.setPassword("");
-        shadow.setFlag("true");
-
-        String pawd=username+":x:"+passwd.getUid()+":"+passwd.getGid()+":"+passwd.getComment()+":"+passwd.getUserpath()+"\n";
         String shacode = SHAUtil.shaEncode(password);
-        String shaw=username+":"+shacode+"\n";
+        shadow.setPassword(shacode);
 
-        if(userService.register(pawd,shaw))
+        if(userService.register(passwd.toString(),shadow.toString()))
         {
           return "success";
         }
@@ -161,8 +153,7 @@ public class UserController {
      */
 
     @RequestMapping(value="/user")
-    public String userpage()
-    {
+    public String userpage() {
         return "user";
     }
 }
