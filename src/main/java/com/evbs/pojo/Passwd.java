@@ -1,10 +1,13 @@
 package com.evbs.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by squirrel-chen on 7/12/17.
  */
-public class Passwd {
+public class Passwd implements Serializable{
 
+    private static final long serialVersionUID = 6243970665767107972L;
 
     //属性值
 

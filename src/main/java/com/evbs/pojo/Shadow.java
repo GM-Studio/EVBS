@@ -1,11 +1,13 @@
 package com.evbs.pojo;
 
-import java.util.Date;
+import java.io.Serializable;
 
 /**
  * Created by squirrel-chen on 7/12/17.
  */
-public class Shadow {
+public class Shadow implements Serializable {
+
+    private static final long serialVersionUID = 7010942365616578587L;
 
     //属性值
 
