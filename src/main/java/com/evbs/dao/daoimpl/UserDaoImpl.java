@@ -4,6 +4,8 @@ import com.evbs.dao.UserDao;
 import com.evbs.pojo.User;
 import com.evbs.util.FileUtil;
 import com.evbs.util.LogUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,6 +18,8 @@ import java.util.*;
 
 @Repository
 public class UserDaoImpl implements UserDao {
+
+    private static final Logger logger= LoggerFactory.getLogger(UserDaoImpl.class);
 
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
@@ -108,10 +112,10 @@ public class UserDaoImpl implements UserDao {
         String data= FileUtil.readFromFile(passwdpath);
         if(data.equals(""))
         {
-            LogUtil.logger.info("暂无数据读取");
+            logger.info("暂无数据读取");
             return false;
         }
-        LogUtil.logger.info("\n"+data);
+        logger.info("\n"+data);
         return true;
     }
 

@@ -9,6 +9,8 @@ import com.evbs.util.LogUtil;
 import com.evbs.util.SHAUtil;
 import org.apache.commons.io.FileUtils;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,8 @@ import java.util.List;
 
 @Controller
 public class UserController {
+
+    private static final Logger logger= LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -67,7 +71,7 @@ public class UserController {
     {
         String USER_PATH=ROOT_PATH+username;
         String PROFILE_PATH=USER_PATH+"/.profile";
-        LogUtil.logger.info("登录的用户名和密码"+username+"...."+password);
+        logger.info("登录的用户名和密码"+username+"....."+password);
 
         //从文件中截取得到对应用户所在的行数
 
@@ -78,7 +82,7 @@ public class UserController {
         }
         catch(Exception e)
         {
-            LogUtil.logger.error("截取错误");
+            logger.error("截取字符串错误");
             USER_ID=0;
             e.printStackTrace();
         }
@@ -89,12 +93,12 @@ public class UserController {
         String encodepw=SHAUtil.shaEncode(password);
         if(encodepw.equals(readdata))
         {
-            LogUtil.logger.info("密码验证正确");
+            logger.info("密码验证正确");
             return "success";
         }
         else
         {
-            LogUtil.logger.error("密码验证错误");
+            logger.error("密码验证错误");
             return "failure";
         }
     }
@@ -116,7 +120,7 @@ public class UserController {
         //统计已存在用户的数目
 
         int linesnum=FileUtil.countLines(PASSWD_PATH);
-        LogUtil.logger.info("用户总数量"+linesnum);
+        logger.info("用户总数量"+linesnum);
         FileUtil.writeToFile(PROFILE_PATH,username+":"+Integer.valueOf(linesnum+1)+"\n");
 
         /**
