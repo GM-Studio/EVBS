@@ -4,6 +4,7 @@ import com.evbs.pojo.Passwd;
 import com.evbs.pojo.Shadow;
 import com.evbs.pojo.User;
 import com.evbs.service.UserService;
+import com.evbs.util.Constrants;
 import com.evbs.util.FileUtil;
 import com.evbs.util.SHAUtil;
 import org.apache.commons.io.FileUtils;
@@ -23,16 +24,16 @@ import java.util.List;
  */
 
 @Controller
-public class UserController {
+public class UserController implements Constrants {
 
     private static final Logger logger= LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
-
-    private  String ROOT_PATH="/home/squirrel-chen/evbs/";
-    private  String PASSWD_PATH=ROOT_PATH+"etc/passwd";
-    private  String SHADOW_PATH=ROOT_PATH+"etc/shadow";
+//
+//    private  String ROOT_PATH="/home/squirrel-chen/evbs/";
+//    private  String PASSWD_PATH=ROOT_PATH+"etc/passwd";
+//    private  String SHADOW_PATH=ROOT_PATH+"etc/shadow";
 
     @RequestMapping("/test")
     public String testuser()
