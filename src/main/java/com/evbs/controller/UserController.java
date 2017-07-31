@@ -5,24 +5,17 @@ import com.evbs.pojo.Shadow;
 import com.evbs.pojo.User;
 import com.evbs.service.UserService;
 import com.evbs.util.FileUtil;
-import com.evbs.util.LogUtil;
 import com.evbs.util.SHAUtil;
 import org.apache.commons.io.FileUtils;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -115,7 +108,7 @@ public class UserController {
 
         String USER_PATH=ROOT_PATH+username;
         String PROFILE_PATH=USER_PATH+"/.profile";
-        LogUtil.logger.info("创建用户目录"+ FileUtil.createUserDir(USER_PATH));
+        logger.info("创建用户目录"+ FileUtil.createUserDir(USER_PATH));
 
         //统计已存在用户的数目
 

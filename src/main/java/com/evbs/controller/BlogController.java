@@ -1,6 +1,5 @@
 package com.evbs.controller;
 
-import com.evbs.util.LogUtil;
 import org.hashids.Hashids;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

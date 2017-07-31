@@ -3,7 +3,6 @@ package com.evbs.dao.daoimpl;
 import com.evbs.dao.UserDao;
 import com.evbs.pojo.User;
 import com.evbs.util.FileUtil;
-import com.evbs.util.LogUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
