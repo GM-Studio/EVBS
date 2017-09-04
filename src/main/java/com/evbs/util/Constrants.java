@@ -9,5 +9,4 @@ public interface Constrants {
     public static final String PASSWD_PATH=ROOT_PATH+"/etc/passwd";
     public static final String SHADOW_PATH=ROOT_PATH+"/etc/shadow";
 
-
 }

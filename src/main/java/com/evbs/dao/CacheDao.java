@@ -13,4 +13,8 @@ public interface CacheDao {
     public User getUser(int userid);
     public void testRedis();
 
+    public boolean viCache(String vidata);
+
+    public boolean viCacheGet();
+
 }
