@@ -27,10 +27,25 @@
         return res;
       };
 
+
+
   $(function() {
         // 创建终端窗口
         var header = 'Welcome to EVBS-Console! \n'+'Input help or h to get more help info! \n';  
         window.jqconsole = $('#console').jqconsole(header, 'EVBS >> ');
+
+        helpmenu=function () {
+            jqconsole.Write("Welcome to EVBS-Console ! \n" +
+                "Help:Show the the EVBS-Console help menu \n"+
+                "Vi:Enter the vi mode \n" +
+                "Q:Quit the EVBS-Console \n"+
+                "Ctrl+Z:Abort the console \n"+
+                "Ctrl+A:Move to the line-start \n"+
+                "Ctrl+E:Move to the line-end \n"
+            );
+            handler();
+        }
+
 
         /* 创建快捷键*/
         //终止终端
@@ -65,7 +80,9 @@
               switch(command)
               {
                 case "vi":$("#vi-window").modal("show");return handler();
-                default:jqconsole.Write('ERROR: ' + command+'is not defined'+'\n');
+                  case "h":
+                  case "help":return helpmenu();
+                default:jqconsole.Write('ERROR: ' + command+' is not defined'+'\n');
               }
             } catch (e) {
               jqconsole.Write('ERROR'+e.message+"\n");
