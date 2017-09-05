@@ -40,7 +40,7 @@ public class ViController {
     private CacheDao cacheDao;
 
     @RequestMapping("/vi")
-    public String vipage(){return "vipage";}
+    public String vipage(){return "vipage.html";}
 
     @RequestMapping("/vipage")
     @ResponseBody
