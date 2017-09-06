@@ -146,6 +146,7 @@
 
         var consoleCancelFlag = false;
         var console = $("#vidiv");
+
         var controller = console.console({
             promptLabel: ' ',
             commandValidate: function (line) {
@@ -153,12 +154,14 @@
                 else return true;
             },
             commandHandle: function (line, report) {
+
                 /* setTimeout  执行一次
                  setInterval 重复执行
                  每隔一段时间存入缓存
                  */
-                setInterval(function () {
+                setTimeout(function () {
                     if (!consoleCancelFlag) {
+
                         $.ajax({
                             url: "vipage",
                             method: "post",
@@ -168,7 +171,7 @@
                                 if(data.flag=="true")
                                 {
                                     alert("缓存成功");
-                                   report(line);
+
                                 }
                                 else
                                 {
@@ -188,6 +191,8 @@
                         consoleCancelFlag = false;
                     }
                 }, 1000);
+
+
             },
             cancelHandle: function () {
                 consoleCancelFlag = true;
@@ -195,6 +200,8 @@
             animateScroll: true,
             promptHistory: true
         });
+
+
     });
 </script>
 
