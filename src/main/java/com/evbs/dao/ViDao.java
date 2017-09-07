@@ -5,8 +5,12 @@ package com.evbs.dao;
  */
 public interface ViDao {
 
-    public boolean ViCache(String vidata);
+    public boolean setViCache(String vicache);
 
-    public boolean ViCacheGet();
+    public String getViCache();
+
+    public boolean setViFile(String vifile);
+
+    public String getViFile();
 
 }

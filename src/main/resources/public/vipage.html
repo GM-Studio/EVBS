@@ -162,7 +162,27 @@
                 setTimeout(function () {
                     if (!consoleCancelFlag) {
 
+                        //取出缓存的内容 放入文件中
 
+
+                        $.ajax({
+                            url: "vipage",
+                            method: "post",
+                            data: {'vidata':line},
+                            dataType: "json",
+                            success: function (data) {
+                                if(data.flag=="true")
+                                {
+                                    alert("缓存成功");
+                                    report("");
+                                }
+                                else
+                                {
+                                    alert("缓存失败");
+                                    //report("");
+                                }
+                            }
+                        })
                     }
 
                     else

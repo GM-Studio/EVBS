@@ -51,4 +51,25 @@ public class ViController {
         cacheDao.viCacheGet();
         return  String.valueOf(JSON.parse("{'flag':'true'}"));
     }
+
+
+    //存入缓存的action
+
+    @RequestMapping("/setvicache")
+    public String setcache(@RequestParam("vicache")String vicache) {
+        return "";
+    }
+
+    //取出缓存的action
+    @RequestMapping("/getvicache")
+    public String getcache(){
+        return "";
+    }
+
+    //存入文件的action
+    @RequestMapping("/setvifile")
+    public String setvifile(){
+        return "";
+    }
+
 }

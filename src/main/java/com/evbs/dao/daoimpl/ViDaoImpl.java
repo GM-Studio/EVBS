@@ -19,17 +19,46 @@ public class ViDaoImpl implements ViDao {
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
 
+
     @Override
-    public boolean ViCache(String vidata) {
-        redisTemplate.opsForValue().set("vi",vidata);
-        logger.info("编辑数据存入缓存");
-        return true;
+    public boolean setViCache(String vicache) {
+        try{
+
+            redisTemplate.opsForValue().set("vicache",vicache);
+            logger.info("存入缓存数据"+vicache);
+            return true;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public boolean ViCacheGet(){
-        String data=String.valueOf(redisTemplate.opsForValue().get("vi"));
-        logger.info("获取缓存的数据"+data);
-        return true;
+    public String getViCache() {
+        String str=new String();
+        try{
+
+            str=String.valueOf(redisTemplate.opsForValue().get("vicache"));
+            logger.info("取出缓存的数据"+str);
+            return str;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            str="error";
+        }
+        return str;
+    }
+
+    @Override
+    public boolean setViFile(String vifile) {
+        return false;
+    }
+
+    @Override
+    public String getViFile() {
+        return null;
     }
 }
