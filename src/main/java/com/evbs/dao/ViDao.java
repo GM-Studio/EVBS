@@ -9,8 +9,8 @@ public interface ViDao {
 
     public String getViCache();
 
-    public boolean setViFile(String vifile);
+    public boolean setViFile(String filepath,String vifile);
 
-    public String getViFile();
+    public String getViFile(String filepath);
 
 }
