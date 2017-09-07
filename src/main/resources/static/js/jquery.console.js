@@ -39,7 +39,7 @@
 
 (function($){
   var isWebkit = !!~navigator.userAgent.indexOf(' AppleWebKit/');
-
+    //创建一个命名空间和属性 config 为参数 对象 查看前台代码
   $.fn.console = function(config){
     ////////////////////////////////////////////////////////////////////////
     // Constants
@@ -91,6 +91,7 @@
       85: clearCurrentPrompt
     };
     if(config.ctrlCodes) {
+      //继承属性到console对象实例中
       $.extend(ctrlCodes, config.ctrlCodes);
     }
     var altCodes = {
@@ -289,14 +290,16 @@
       // fired *before* the text is actually pasted
       setTimeout(function() {
         typer.consoleInsert(typer.val());
+        console.log("20"+typer.val());
         typer.val("");
-      }, 0);
+      },0);
     });
 
     ////////////////////////////////////////////////////////////////////////
     // Handle key hit before translation
     // For picking up control characters like up/left/down/right
 
+   //按下键盘事件响应
     typer.keydown(function(e){
       cancelKeyPress = 0;
       var keyCode = e.keyCode;
@@ -593,6 +596,7 @@
       mesg.show();
     };
 
+    
     ////////////////////////////////////////////////////////////////////////
     // Handle normal character insertion
     // data can either be a number, which will be interpreted as the
@@ -601,8 +605,14 @@
       // TODO: remove redundant indirection
       var text = (typeof data == 'number') ? String.fromCharCode(data) : data;
       var before = promptText.substring(0,column);
+            console.log("consoleInsert  4    "+before);
+
       var after = promptText.substring(column);
+            console.log("consoleInsert44444"+after);
+
       promptText = before + text + after;
+      console.log("consoleInsert4"+promptText);
+
       moveColumn(text.length);
       restoreText = promptText;
       updatePromptDisplay();
@@ -776,20 +786,49 @@
     ////////////////////////////////////////////////////////////////////////
     // Update the prompt display
     function updatePromptDisplay(){
+    
       var line = promptText;
+      if(line.length%25==0)
+      {
+        //此处ajax请求送入缓存
+
+          $.ajax({
+              url: "vipage",
+              method: "post",
+              data: {'vidata':line},
+              dataType: "json",
+              success: function (data) {
+                  if(data.flag=="true")
+                  {
+                      alert("缓存成功");
+                  }
+                  else
+                  {
+                      alert("缓存失败");
+                  }
+              }
+          });
+
+          console.log("hi   \n "+ line);
+      }
+
       var html = '';
       if (column > 0 && line == ''){
         // When we have an empty line just display a cursor.
+        console.log("2"+cursor);
         html = cursor;
       } else if (column == promptText.length){
         // We're at the end of the line, so we need to display
         // the text *and* cursor.
         html = htmlEncode(line) + cursor;
+        console.log("3"+html);
       } else {
         // Grab the current character, if there is one, and
         // make it the current cursor.
         var before = line.substring(0, column);
+        console.log("4"+before);
         var current = line.substring(column,column+1);
+        console.log("5"+current);
         if (current){
           current =
             '<span class="jquery-console-cursor">' +
@@ -798,8 +837,10 @@
         }
         var after = line.substring(column+1);
         html = htmlEncode(before) + current + htmlEncode(after);
+        console.log("6"+html);
       }
       prompt.html(html);
+      console.log("7"+html);
       scrollToBottom();
     };
 
@@ -832,4 +873,9 @@
     $(this).focus();
     window.scrollTo(x, y);
   };
+
+ 
+
 })(jQuery);
+
+

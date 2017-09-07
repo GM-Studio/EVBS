@@ -162,24 +162,7 @@
                 setTimeout(function () {
                     if (!consoleCancelFlag) {
 
-                        $.ajax({
-                            url: "vipage",
-                            method: "post",
-                            data: {'vidata':line},
-                            dataType: "json",
-                            success: function (data) {
-                                if(data.flag=="true")
-                                {
-                                    alert("缓存成功");
 
-                                }
-                                else
-                                {
-                                    alert("缓存失败");
-                                    //report("");
-                                }
-                            }
-                        })
                     }
 
                     else
