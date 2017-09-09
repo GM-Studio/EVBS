@@ -164,11 +164,10 @@
 
                         //取出缓存的内容 放入文件中
 
-
                         $.ajax({
-                            url: "vipage",
+                            url: "setvifile",
                             method: "post",
-                            data: {'vidata':line},
+                            data: {'vifilepath':'/home/squirrel-chen/evbs/admin/vi.txt','vidata':line},
                             dataType: "json",
                             success: function (data) {
                                 if(data.flag=="true")
@@ -179,7 +178,7 @@
                                 else
                                 {
                                     alert("缓存失败");
-                                    //report("");
+                                    report("");
                                 }
                             }
                         })

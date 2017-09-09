@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ViController {
 
 
-
-    @Autowired
-    private CacheDao cacheDao;
+//
+//    @Autowired
+//    private CacheDao cacheDao;
 
     @Autowired
     private ViDao viDao;
@@ -69,9 +69,15 @@ public class ViController {
     }
 
     //存入文件的action
+    @ResponseBody
     @RequestMapping("/setvifile")
-    public String setvifile(){
-        return "";
+    public String setvifile(@RequestParam("vifilepath")String filepath,@RequestParam("vidata")String vidata){
+
+        if(viDao.setViFile(filepath,vidata))
+        {
+            return String.valueOf(JSON.parse("{'flag':'true'}"));
+        }
+        return String.valueOf(JSON.parse("{'flag':'false'}"));
     }
 
 }

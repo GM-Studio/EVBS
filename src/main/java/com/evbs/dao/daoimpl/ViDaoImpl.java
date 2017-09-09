@@ -57,9 +57,16 @@ public class ViDaoImpl implements ViDao {
     public boolean setViFile(String filepth,String vifile) {
         try{
 
-          if(FileUtil.writeToFile(filepth,vifile)){
-              return true;
-          }
+            if(vifile.equals(redisTemplate.opsForValue().get("vicache")))
+            {
+                FileUtil.writeToFile(filepth,String.valueOf(redisTemplate.opsForValue().get("vicache")));
+                return true;
+            }
+            else
+            {
+                FileUtil.writeToFile(filepth,vifile);
+                return true;
+            }
         }
         catch(Exception e)
         {
