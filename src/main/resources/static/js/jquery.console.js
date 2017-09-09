@@ -788,14 +788,14 @@
     function updatePromptDisplay(){
     
       var line = promptText;
-      if(line.length%25==0)
+      if(line.length%25==0&&line.length!=0)
       {
         //此处ajax请求送入缓存
 
           $.ajax({
-              url: "vipage",
+              url: "setvicache",
               method: "post",
-              data: {'vidata':line},
+              data: {'vicache':line},
               dataType: "json",
               success: function (data) {
                   if(data.flag=="true")
@@ -809,7 +809,18 @@
               }
           });
 
-          console.log("hi   \n "+ line);
+          // 原因可能是因为不同步 毕竟ajax是异步额
+
+          $.ajax({
+              url:"getvicache",
+              method:"post",
+              data:{},
+              dataType:"json",
+              success:function (data) {
+                  console.log("缓存数据"+data.data);
+                  console.log("data is"+data);
+              }
+          })
       }
 
       var html = '';

@@ -34,13 +34,13 @@ public class CacheDaoImpl implements CacheDao {
         userDao.testRedis();
     }
 
-    @Override
-    public boolean viCache(String vidata) {
-        return viDao.ViCache(vidata);
-    }
-
-    @Override
-    public boolean viCacheGet(){
-        return viDao.ViCacheGet();
-    }
+//    @Override
+//    public boolean viCache(String vidata) {
+//        return viDao.ViCache(vidata);
+//    }
+//
+//    @Override
+//    public boolean viCacheGet(){
+//        return viDao.ViCacheGet();
+//    }
 }
