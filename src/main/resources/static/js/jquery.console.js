@@ -47,6 +47,11 @@
     var keyCodes = {
       // left
       37: moveBackward,
+      //h
+
+      //l
+
+
       // right
       39: moveForward,
       // up
