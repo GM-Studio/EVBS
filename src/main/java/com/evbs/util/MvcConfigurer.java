@@ -12,11 +12,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class MvcConfigurer extends WebMvcConfigurerAdapter {
 
+    //增加视图跳转器
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/home").setViewName("home.html");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
+
+    //路径匹配
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
