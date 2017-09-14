@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- 引入所需的文件库-->
+    <meta charset="UTF-8"/>
+    <title>编辑页面</title>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/jqconsole.js"></script>
+    <script type="text/javascript" src="js/jquery.console.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/ansi.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+
+</head>
+
+<!-- js代码块 -->
+<script type="text/javascript">
+
+    propStartingWith = function (obj, prefix) {
+        var res = [];
+        for (var m in obj) {
+            if (m.indexOf(prefix) === 0) {
+                res.push(m);
+            }
+        }
+        return res;
+    };
+
+
+    $(function () {
+        // 创建终端窗口
+        var header = 'Welcome to EVBS-Console! \n' + 'Input help or h to get more help info! \n';
+        window.jqconsole = $('#console').jqconsole(header, 'EVBS >> ');
+
+        helpmenu = function () {
+            jqconsole.Write("Welcome to EVBS-Console ! \n" +
+                "Help:Show the the EVBS-Console help menu \n" +
+                "Vi:Enter the vi mode \n" +
+                "Q:Quit the EVBS-Console \n" +
+                "Ctrl+Z:Abort the console \n" +
+                "Ctrl+A:Move to the line-start \n" +
+                "Ctrl+E:Move to the line-end \n"
+            );
+            handler();
+        };
+
+
+        /* 创建快捷键*/
+        //终止终端
+        jqconsole.RegisterShortcut('Z', function () {
+            jqconsole.AbortPrompt();
+            handler();
+        });
+        // 移动到行首
+        jqconsole.RegisterShortcut('A', function () {
+            jqconsole.MoveToStart();
+            handler();
+        });
+        // 移动到行尾
+        jqconsole.RegisterShortcut('E', function () {
+            jqconsole.MoveToEnd();
+            handler();
+        });
+
+        /* 括号匹配*/
+
+        jqconsole.RegisterMatching('{', '}', 'brace');
+        jqconsole.RegisterMatching('(', ')', 'paran');
+        jqconsole.RegisterMatching('[', ']', 'bracket');
+
+        /* 命令行的句柄获取 函数*/
+        var handler = function (command) {
+            /* 获取文本内容 */
+            /* 命令行 句柄 */
+            if (command) {
+                try {
+                    /* 此处可以编写键入vi后调用的函数内容 弹出小窗口 编辑 窗口 */
+                    switch (command) {
+                        case "vi":
+                            $("#vi-window").modal("show");
+                            return handler();
+                        case "h":
+                        case "help":
+                            return helpmenu();
+                        default:
+                            jqconsole.Write('ERROR: ' + command + ' is not defined' + '\n');
+                    }
+                } catch (e) {
+                    jqconsole.Write('ERROR' + e.message + "\n");
+                }
+            }
+
+
+            /* 命令行提示？*/
+            jqconsole.Prompt(true, handler, function (command) {
+                // Continue line if can't compile the command.
+                try {
+                    Function(command);
+                } catch (e) {
+                    if (/[\[\{\(]$/.test(command)) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+                return false;
+            });
+        };
+
+        /* 快捷键提示 ？？*/
+
+        jqconsole.SetKeyPressHandler(function (e) {
+            var text = jqconsole.GetPromptText() + String.fromCharCode(e.which);
+            // We'll only suggest things on the window object.
+            if (text.match(/\./)) {
+                return;
+            }
+
+            var props = propStartingWith(window, text);
+            if (props.length) {
+                if (!$('.suggest').length) {
+                    $('<div/>').addClass('suggest').appendTo($('.jqconsole'));
+                }
+                $('.suggest').empty().show();
+                props.forEach(function (prop) {
+                    $('.suggest').append('<div>' + prop + '</div>');
+                });
+                var pos = $('.jqconsole-cursor').offset();
+                pos.left += 20;
+                $('.suggest').offset(pos);
+            } else {
+                $('.suggest').hide();
+            }
+        });
+
+        jqconsole.SetControlKeyHandler(function (e) {
+            $('.suggest').hide();
+            if (e.which === 9 && $('.suggest div').length) {
+                jqconsole.SetPromptText($('.suggest div').first().text());
+                return false;
+            }
+        });
+        // 初始化
+        handler();
+
+        var consoleCancelFlag = false;
+        var console = $("#vidiv");
+
+        var controller = console.console({
+            promptLabel: ' ',
+            commandValidate: function (line) {
+                if (line == "") return false;
+                else return true;
+            },
+            commandHandle: function (line, report) {
+
+                /* setTimeout  执行一次
+                 setInterval 重复执行
+                 每隔一段时间存入缓存
+                 */
+                setTimeout(function () {
+                    if (!consoleCancelFlag) {
+
+                        //取出缓存的内容 放入文件中
+
+                        $.ajax({
+                            url: "setvifile",
+                            method: "post",
+                            data: {'vifilepath':'/home/squirrel-chen/evbs/admin/vi.txt','vidata':line},
+                            dataType: "json",
+                            success: function (data) {
+                                if(data.flag=="true")
+                                {
+                                    alert("缓存成功");
+                                    report("");
+                                }
+                                else
+                                {
+                                    alert("缓存失败");
+                                    report("");
+                                }
+                            }
+                        })
+                    }
+
+                    else
+                    {
+                        report([{
+                            msg: "User interrupt",
+                            className: "jquery-console-message-error"
+                        }]);
+                        consoleCancelFlag = false;
+                    }
+                }, 1000);
+
+
+            },
+            cancelHandle: function () {
+                consoleCancelFlag = true;
+            },
+            animateScroll: true,
+            promptHistory: true
+        });
+
+
+    });
+</script>
+
+<style type="text/css" media="screen">
+    /* css 样式表*/
+    #vidiv {
+        word-wrap: break-word;
+    }
+
+    #vidiv {
+        font-size: 14px;
+        margin-top: 1em
+    }
+
+    #vidiv div.jquery-console-inner {
+        width: auto;
+        height: 200px;
+        background: #efefef;
+        padding: 0.5em;
+        overflow: auto
+    }
+
+    #vidiv div.jquery-console-prompt-box {
+        color: #444;
+        font-family: monospace;
+    }
+
+    #vidiv div.jquery-console-focus span.jquery-console-cursor {
+        background: #333;
+        color: #eee;
+        font-weight: bold
+    }
+
+    #vidiv div.jquery-console-message-error {
+        color: #ef0505;
+        font-family: sans-serif;
+        font-weight: bold;
+        padding: 0.1em;
+    }
+
+    #vidiv div.jquery-console-message-success {
+        color: #187718;
+        font-family: monospace;
+        padding: 0.1em;
+    }
+
+    #vidiv span.jquery-console-prompt-label {
+        font-weight: bold
+    }
+</style>
+<body>
+
+<noscript>
+    <p><strong>Please enable JavaScript or upgrade your browser .</strong></p>
+</noscript>
+
+<div id="console"></div>
+
+<!-- vi window -->
+
+<div class="modal fade" id="vi-window" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                <h4 class="modal-title" id="myModalLabel">Vi模式窗口</h4>
+            </div>
+            <div class="modal-body">
+                <div id="vidiv">此处为vi模式的窗口</div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

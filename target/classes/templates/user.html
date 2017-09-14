@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>会员页面</title>
+</head>
+<body>
+
+<form action="/register" method="post" style="text-align: center;">
+    <input type="text" name="username" />
+    <input type="password" name="password" /><br/>
+    <input type="submit" th:value="注册" />
+    <input type="reset" th:value="重置" />
+</form>
+
+<form action="/login" method="post" style="text-align: center">
+    <input type="text" name="username" />
+    <input type="password" name="password" /><br/>
+    <input type="submit" th:value="登录" />
+    <input type="reset" th:value="重置" />
+</form>
+</body>
+</html>

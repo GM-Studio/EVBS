@@ -1,0 +1,74 @@
+ html, body {
+        background-color: #333;
+        color: black;
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+      }
+      #console {
+        height: 400px;
+        width: 750px;
+        position:relative;
+        background-color: black;
+        border: 2px solid #CCC;
+        margin: 0 auto;
+        margin-top: 50px;
+      }
+      .jqconsole {
+        padding: 10px;
+        padding-bottom: 10px;
+      }
+      .jqconsole-cursor {
+        background-color: #999;
+      }
+      .jqconsole-blurred .jqconsole-cursor {
+        background-color: #666;
+      }
+      .jqconsole-prompt {
+        color: #0d0;
+      }
+      .jqconsole-old-prompt {
+        color: #0b0;
+        font-weight: normal;
+      }
+      .jqconsole-input {
+        color: #dd0;
+      }
+      .jqconsole-old-input {
+        color: #bb0;
+        font-weight: normal;
+      }
+      .brace {
+        color: #00FFFF;
+      }
+      .paran {
+        color: #FF00FF;
+      }
+      .bracket {
+        color: #FFFF00;
+      }
+      .jqconsole-composition {
+        background-color: red;
+      }
+
+       #vidiv { word-wrap: break-word; }
+      
+      /* Sixth console */
+      #idiv { font-size: 14px }
+      #vidiv div.jquery-console-inner
+       { width:900px; height:200px; background:#333; padding:0.5em;
+         overflow:auto }
+      #vidiv div.jquery-console-prompt-box
+       { color:#fff; font-family:monospace; }
+      #vidiv div.jquery-console-focus span.jquery-console-cursor
+       { background:#fefefe; color:#333; font-weight:bold }
+      #vidiv div.jquery-console-message-error
+       { color:#ef0505; font-family:sans-serif; font-weight:bold;
+         padding:0.1em; }
+      #vidiv div.jquery-console-message-value
+       { color:#1ad027; font-family:monospace;
+         padding:0.1em; }
+      #vidiv  div.jquery-console-message-type
+       { color:#52666f; font-family:monospace;
+         padding:0.1em; }
+      #vidiv span.jquery-console-prompt-label { font-weight:bold }
