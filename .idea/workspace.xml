@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a81df6fe-d7a0-4942-abea-61d4ee71c732" name="Default" comment="">
+    <list default="true" id="a81df6fe-d7a0-4942-abea-61d4ee71c732" name="Default" comment="Optimize and beautify the markdown page&#10;&#10;1.beautify the markdown page&#10;3.Forty-sixth commit">
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/public/markdown.html" afterPath="$PROJECT_DIR$/src/main/resources/public/markdown.html" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -783,7 +782,7 @@
       <workItem from="1505215024854" duration="272000" />
       <workItem from="1505309411694" duration="1158000" />
       <workItem from="1505310585961" duration="775000" />
-      <workItem from="1505357563082" duration="2542000" />
+      <workItem from="1505357563082" duration="2785000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit &#10;Reconstruction this EVBS project by Squirrel-Chen">
       <created>1497790454480</created>
@@ -1114,11 +1113,18 @@
       <option name="project" value="LOCAL" />
       <updated>1505310544749</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Optimize and beautify the markdown page&#10;&#10;1.beautify the markdown page&#10;3.Forty-sixth commit">
+      <created>1505360256565</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1505360256565</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="146582000" />
+    <option name="totallyTimeSpent" value="146825000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="141" y="56" width="907" height="663" extended-state="0" />
@@ -1222,7 +1228,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Twenty-third Commit&#10;Add the static resources" />
     <MESSAGE value="Refactor the code passwd and shadow pojo&#10;&#10;1.Use the toString method instead of the splice string &#10;2.Write the passwd and shadow file with the POJO object &#10;3.Do it on 17th.July.2017&#10;4.Twenty-fourth commit" />
     <MESSAGE value="Refactor the code serializable the pojo&#10;&#10;1.Serializable the Passwd and Shadow pojo&#10;3.Do it on 22th.July.2017&#10;4.Twenty-fifth commit" />
     <MESSAGE value="Refactor the code change the logger code&#10;&#10;1.Add the logger code into useful classes&#10;3.Do it on 30th.July.2017&#10;4.Twenty-sixth commit" />
@@ -1247,7 +1252,8 @@
     <MESSAGE value="Refactor the maven file &#10;&#10;1.Do it on 12.sep.2017&#10;2.Forty-third commit" />
     <MESSAGE value="Refactor the markdown page &#10;&#10;1.Do it on 13.sep.2017&#10;2.Forty-fourth commit" />
     <MESSAGE value="Refactor the markdown page &#10;&#10;1.Do it on 13.sep.2017&#10;2.Forty-fifth commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor the markdown page &#10;&#10;1.Do it on 13.sep.2017&#10;2.Forty-fifth commit" />
+    <MESSAGE value="Optimize and beautify the markdown page&#10;&#10;1.beautify the markdown page&#10;3.Forty-sixth commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimize and beautify the markdown page&#10;&#10;1.beautify the markdown page&#10;3.Forty-sixth commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
